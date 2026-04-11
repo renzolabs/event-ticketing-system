@@ -1,0 +1,26 @@
+### Authentication API Tests
+
+### Register a new user
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+
+### Login user (sets cookie)
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+
+### Logout (clears cookie)
+POST http://localhost:8080/auth/logout

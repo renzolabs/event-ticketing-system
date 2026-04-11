@@ -1,0 +1,18 @@
+### Booking API Tests
+
+### Create a booking (requires authentication)
+POST http://localhost:8080/bookings
+Content-Type: application/json
+Cookie: access_token=<token_from_login>
+
+{
+  "eventId": 1,
+  "quantity": 2,
+  "amount": 99.99
+}
+
+###
+
+### Get user bookings (requires authentication)
+GET http://localhost:8080/bookings/user/1
+Cookie: access_token=<token_from_login>

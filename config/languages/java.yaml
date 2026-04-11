@@ -1,0 +1,171 @@
+language: java
+version: "21"
+display_name: "Java"
+
+naming:
+  files:
+    classes: PascalCase
+    interfaces: PascalCase
+    enums: PascalCase
+    annotations: PascalCase
+  
+  code:
+    classes: PascalCase
+    interfaces: PascalCase
+    enums: PascalCase
+    methods: camelCase
+    variables: camelCase
+    parameters: camelCase
+    constants: UPPER_SNAKE_CASE
+    packages: lowercase
+    
+  patterns:
+    class: "^[A-Z][a-zA-Z0-9]*$"
+    method: "^[a-z][a-zA-Z0-9]*$"
+    constant: "^[A-Z][A-Z0-9_]*$"
+    package: "^[a-z]+(\.[a-z]+)*$"
+
+structure:
+  layers:
+    - name: api
+      purpose: "REST controllers, DTOs, request/response objects"
+      files:
+        - "*Controller.java"
+        - "*Request.java"
+        - "*Response.java"
+    
+    - name: application
+      purpose: "Business logic, services, facades"
+      files:
+        - "*Service.java"
+        - "*ServiceImpl.java"
+        - "*Facade.java"
+    
+    - name: domain
+      purpose: "Entities, enums, value objects"
+      files:
+        - "*.java"
+      excludes:
+        - "*Controller*"
+        - "*Service*"
+        - "*Repository*"
+    
+    - name: infrastructure
+      purpose: "Repositories, external integrations, utilities"
+      files:
+        - "*Repository.java"
+        - "*Util.java"
+        - "*Config.java"
+
+code_standards:
+  imports:
+    order:
+      - java.*
+      - javax.*
+      - org.*
+      - com.*
+    prohibited:
+      - "java.util.*"
+      - "lombok.*"
+    
+  annotations:
+    preferred:
+      class_level:
+        - "@RestController"
+        - "@Service"
+        - "@Repository"
+        - "@Entity"
+        - "@Data"
+        - "@Builder"
+      
+    required:
+      - "@Override" for interface implementations
+  
+  lombok:
+    preferred_annotations:
+      - "@Data"
+      - "@Builder"
+      - "@NoArgsConstructor"
+      - "@AllArgsConstructor"
+      - "@RequiredArgsConstructor"
+      - "@Slf4j"
+  
+  best_practices:
+    - Use constructor injection
+    - Use `final` for method parameters
+    - Return `ResponseEntity<?>` from controllers
+    - Use `Optional<>` for nullable returns
+    - Use `Stream` API for collections
+    - Use `var` for local variables (Java 10+)
+
+templates:
+  application: "templates/code/java-application-template.java"
+  controller: "templates/code/java-controller-template.java"
+  service: "templates/code/java-service-template.java"
+  repository: "templates/code/java-repository-template.java"
+  entity: "templates/code/java-entity-template.java"
+  dto: "templates/code/java-dto-template.java"
+  
+  template_variables:
+    - package
+    - applicationName
+    - applicationClassName
+    - author
+    - version
+    - since
+    - module
+    - entity
+    - entityLower
+    - entities
+    - tableName
+
+formatting:
+  tool: google-java-format
+  version: "1.35.0"
+  jar_file: "tools/google-java-format-1.35.0-all-deps.jar"
+  style: google
+  
+  scripts:
+    unix: scripts/format-java.sh
+    windows: scripts/format-java.bat
+  
+  options:
+    - --replace
+    - --skip-javadoc-formatting
+  
+  integration:
+    git_hook: pre-commit
+    ci_check: true
+    auto_format_on_commit: true
+    behavior: |
+      The pre-commit hook automatically formats staged Java files before commit.
+      Only files that are staged (git add) are formatted, not the entire codebase.
+      Formatted files are automatically re-staged with the formatting changes.
+      If the formatter JAR is missing, a warning is shown but the commit proceeds.
+  
+  manual_usage:
+    description: "Run formatter manually on all Java files"
+    unix: "./scripts/format-java.sh"
+    windows: ".\\scripts\\format-java.bat"
+  
+  ide_support:
+    - IntelliJ IDEA (via plugin)
+    - Eclipse (via plugin)
+    - VS Code (via extension)
+
+frameworks:
+  spring_boot:
+    version: "3.2.x"
+    preferred_dependencies:
+      - spring-boot-starter-web
+      - spring-boot-starter-data-jpa
+      - spring-boot-starter-validation
+      - spring-boot-starter-security
+      - spring-boot-starter-test
+      - springdoc-openapi
+      - lombok
+    
+    config_files:
+      - application.yaml
+      - application-local.yaml
+      - application-test.yaml

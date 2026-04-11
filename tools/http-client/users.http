@@ -1,0 +1,11 @@
+### User API Tests
+
+### Get current user profile (requires authentication)
+GET http://localhost:8080/users/me
+Cookie: access_token=<token_from_login>
+
+###
+
+### Get user by ID
+GET http://localhost:8080/users/1
+Cookie: access_token=<token_from_login>

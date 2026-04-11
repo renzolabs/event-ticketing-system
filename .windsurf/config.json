@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "repository": {
+    "name": "template-spring-boot",
+    "description": "Reusable AI governance guidelines for any project",
+    "url": "https://github.com/renzolabs/template-spring-boot"
+  },
+  "ai": {
+    "behavior": {
+      "enforce_naming_conventions": true,
+      "enforce_folder_structure": true,
+      "require_templates": true,
+      "auto_validate": true,
+      "strict_mode": true,
+      "block_non_compliant": true
+    },
+    "mandatory_reading": [
+      "config/global/naming-conventions.md",
+      "config/global/ai-behavior-rules.md",
+      "config/global/folder-structure.md"
+    ],
+    "startup_sequence": {
+      "step_1": "Load base configuration",
+      "step_2": "Read mandatory guidelines",
+      "step_3": "Load language-specific rules",
+      "step_4": "Load project-type rules",
+      "step_5": "Validate project structure",
+      "step_6": "Confirm AI readiness"
+    }
+  },
+  "config_sources": {
+    "base": "config/global/",
+    "language": "config/languages/java.yaml",
+    "project_type": "config/project-types/spring-boot.yaml"
+  },
+  "validation": {
+    "on_startup": true,
+    "on_file_create": true,
+    "on_code_generate": true,
+    "scripts": {
+      "naming": "scripts/validate-naming.sh",
+      "structure": "scripts/validate-structure.sh",
+      "governance": "scripts/validate-governance.sh"
+    }
+  },
+  "cross_machine": {
+    "auto_sync": true,
+    "sync_on_pull": true,
+    "sync_triggers": ["post-merge", "post-checkout"]
+  },
+  "templates": {
+    "epic": "templates/epics/epic-template.md",
+    "story": "templates/stories/story-template.md",
+    "pr": "templates/pr/pull-request-template.md"
+  }
+}

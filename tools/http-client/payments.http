@@ -1,0 +1,20 @@
+### Payment API Tests
+
+### Create payment
+POST http://localhost:8080/payments
+Content-Type: application/json
+
+{
+  "bookingId": 1,
+  "amount": 99.99
+}
+
+###
+
+### Update payment status
+PATCH http://localhost:8080/payments/1/status
+Content-Type: application/json
+
+{
+  "status": "SUCCESS"
+}
