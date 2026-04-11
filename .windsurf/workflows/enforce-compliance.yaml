@@ -1,0 +1,331 @@
+# AI Compliance Enforcement Workflow
+# Defines automated rules and checks for AI agents
+
+name: "Compliance Enforcement"
+description: "Automated compliance checking and enforcement for development standards"
+
+version: "1.0.0"
+
+# Global enforcement settings
+enforcement:
+  strict_mode: true
+  auto_fix: false
+  warn_only: false
+  
+# File naming conventions
+naming_conventions:
+  enabled: true
+  rules:
+    markdown_files:
+      pattern: "^[a-z0-9-]+\\.md$"
+      description: "Markdown files must use lowercase-with-hyphens"
+      examples:
+        - "api-documentation.md"
+        - "user-guide.md"
+        - "setup-instructions.md"
+      anti_examples:
+        - "API_Documentation.md"
+        - "userGuide.md"
+        - "setupInstructions.md"
+    
+    java_classes:
+      pattern: "^[A-Z][a-zA-Z0-9]*\\.java$"
+      description: "Java classes must use PascalCase"
+      examples:
+        - "UserController.java"
+        - "UserService.java"
+        - "AuthenticationController.java"
+      anti_examples:
+        - "userController.java"
+        - "user_controller.java"
+        - "USERCONTROLLER.java"
+    
+    python_files:
+      pattern: "^[a-z][a-z0-9_]*\\.py$"
+      description: "Python files must use snake_case"
+      examples:
+        - "user_service.py"
+        - "database_helper.py"
+        - "api_client.py"
+      anti_examples:
+        - "userService.py"
+        - "user-service.py"
+        - "USER_SERVICE.py"
+    
+    javascript_files:
+      pattern: "^[a-z][a-z0-9-]*\\.(js|jsx|ts|tsx)$"
+      description: "JavaScript/TypeScript files must use kebab-case"
+      examples:
+        - "user-profile.jsx"
+        - "api-service.js"
+        - "auth-component.tsx"
+      anti_examples:
+        - "userProfile.jsx"
+        - "api_service.js"
+        - "AuthComponent.tsx"
+    
+    scripts:
+      pattern: "^[a-z][a-z0-9-]*\\.(sh|bat)$"
+      description: "Script files must use kebab-case"
+      examples:
+        - "build-project.sh"
+        - "deploy-staging.bat"
+        - "run-tests.sh"
+      anti_examples:
+        - "buildProject.sh"
+        - "build_project.sh"
+        - "BUILD-PROJECT.sh"
+    
+    directories:
+      pattern: "^[a-z0-9-]+$"
+      description: "Directory names must use kebab-case"
+      examples:
+        - "src"
+        - "docs"
+        - "config-files"
+        - "test-data"
+      anti_examples:
+        - "srcFiles"
+        - "src_files"
+        - "SRC"
+
+# Folder structure validation
+folder_structure:
+  enabled: true
+  required_structure:
+    root:
+      - ".windsurf/"
+      - "config/"
+      - "docs/"
+      - "scripts/"
+      - "templates/"
+    
+    config:
+      - "global/"
+      - "languages/"
+      - "project-types/"
+    
+    docs:
+      - "governance/"
+      - "templates/"
+      - "api/"
+      - "architecture/"
+    
+    scripts:
+      - "install-hooks.sh"
+      - "validate-naming.sh"
+      - "validate-structure.sh"
+      - "validate-governance.sh"
+  
+  forbidden_patterns:
+    - "**/node_modules/"
+    - "**/target/"
+    - "**/build/"
+    - "**/.DS_Store"
+    - "**/Thumbs.db"
+
+# Code quality standards
+code_quality:
+  enabled: true
+  rules:
+    file_size:
+      max_size_kb: 500
+      warn_size_kb: 250
+    
+    line_length:
+      max_length: 120
+      warn_length: 100
+    
+    indentation:
+      style: "spaces"
+      size: 2
+    
+    encoding:
+      required: "utf-8"
+      line_ending: "lf"
+
+# Documentation requirements
+documentation:
+  enabled: true
+  requirements:
+    readme_required: true
+    changelog_required: true
+    license_required: true
+    
+    file_headers:
+      enabled: true
+      template: |
+        /**
+         * {filename}
+         * 
+         * {description}
+         * 
+         * @author {author}
+         * @created {date}
+         * @modified {modified}
+         */
+    
+    api_docs:
+      enabled: true
+      formats:
+        - "javadoc"
+        - "jsdoc"
+        - "docstring"
+
+# Security standards
+security:
+  enabled: true
+  rules:
+    no_hardcoded_secrets:
+      patterns:
+        - "password\\s*=\\s*[\"'][^\"']+[\"']"
+        - "api_key\\s*=\\s*[\"'][^\"']+[\"']"
+        - "secret\\s*=\\s*[\"'][^\"']+[\"']"
+    
+    no_debug_code:
+      patterns:
+        - "console\\.log\\("
+        - "System\\.out\\.println\\("
+        - "print\\("
+    
+    input_validation:
+      required: true
+      frameworks:
+        - "spring-boot"
+        - "express"
+        - "django"
+
+# Testing requirements
+testing:
+  enabled: true
+  requirements:
+    test_coverage:
+      minimum_percentage: 80
+      warn_percentage: 60
+    
+    test_naming:
+      pattern: "^(test|should|when)\\w+"
+    
+    test_structure:
+      required_sections:
+        - "given"  # Setup
+        - "when"  # Action
+        - "then"  # Verification
+
+# Git hooks enforcement
+git_hooks:
+  pre_commit:
+    - validate_naming
+    - validate_structure
+    - check_file_size
+    - run_tests
+  
+  commit_msg:
+    - validate_conventional_format
+    - check_max_length
+    - require_description
+  
+  post_merge:
+    - update_configuration
+    - validate_dependencies
+
+# Automated checks
+automated_checks:
+  on_file_create:
+    - validate_naming
+    - check_file_size
+    - validate_encoding
+  
+  on_file_modify:
+    - validate_naming
+    - check_syntax
+    - validate_format
+  
+  on_commit:
+    - run_all_validations
+    - check_test_coverage
+    - validate_documentation
+
+# Error handling
+error_handling:
+  severity_levels:
+    - "error"    # Blocks operation
+    - "warning"  # Allows operation with warning
+    - "info"     # Informational only
+  
+  auto_fix_rules:
+    - "file_encoding"
+    - "line_endings"
+    - "trailing_whitespace"
+  
+  block_rules:
+    - "security_violations"
+    - "naming_conventions"
+    - "trailing_whitespace"
+
+# Integration settings
+integration:
+  ide_plugins:
+    - "windsurf"
+    - "vscode"
+    - "intellij"
+  
+  ci_cd:
+    - "github_actions"
+    - "gitlab_ci"
+    - "jenkins"
+  
+  package_managers:
+    - "maven"
+    - "npm"
+    - "pip"
+
+# Reporting
+reporting:
+  enabled: true
+  format: "json"
+  include:
+    - "violations"
+    - "warnings"
+    - "suggestions"
+    - "statistics"
+  
+  export_formats:
+    - "json"
+    - "markdown"
+    - "html"
+
+# Custom rules for Spring Boot
+spring_boot_specific:
+  enabled: true
+  rules:
+    package_structure:
+      pattern: "com\\.[a-z]+\\.[a-z]+"
+      description: "Spring Boot packages must follow com.company.module pattern"
+    
+    controller_naming:
+      pattern: ".*Controller$"
+      description: "Controllers must end with 'Controller'"
+    
+    service_naming:
+      pattern: ".*Service$"
+      description: "Services must end with 'Service'"
+    
+    repository_naming:
+      pattern: ".*Repository$"
+      description: "Repositories must end with 'Repository'"
+    
+    configuration:
+      required_files:
+        - "application.yml"
+        - "application.properties"
+      forbidden_files:
+        - "application.xml"
+
+# Metadata
+metadata:
+  created: "2026-04-12"
+  updated: "2026-04-12"
+  version: "1.0.0"
+  author: "RenzoLabs Governance Team"
+  contact: "governance@renzolabs.com"

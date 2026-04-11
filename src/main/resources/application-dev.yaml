@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/renzo_ticketing
+    username: postgres
+    password: password
+
+app:
+  jwt:
+    secret: dev-ticketing-secret
+
+ticketing:
+  booking:
+    reservation-timeout-minutes: 15

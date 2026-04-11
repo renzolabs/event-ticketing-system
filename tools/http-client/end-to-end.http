@@ -1,0 +1,96 @@
+### Complete End-to-End Test Flow
+
+### Step 1: Register a new user
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "securepassword123"
+}
+
+###
+
+### Step 2: Login to get authentication cookie
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "securepassword123"
+}
+
+###
+
+### Step 3: Create an event
+POST http://localhost:8080/events
+Content-Type: application/json
+Cookie: access_token=<token_from_login>
+
+{
+  "name": "Tech Conference 2024",
+  "description": "Annual technology conference with speakers from major tech companies",
+  "date": "2024-09-20T09:00:00",
+  "totalTickets": 500
+}
+
+###
+
+### Step 4: List all events to verify
+GET http://localhost:8080/events
+
+###
+
+### Step 5: Get current user profile
+GET http://localhost:8080/users/me
+Cookie: access_token=<token_from_login>
+
+###
+
+### Step 6: Create a booking
+POST http://localhost:8080/bookings
+Content-Type: application/json
+Cookie: access_token=<token_from_login>
+
+{
+  "eventId": 1,
+  "quantity": 3,
+  "amount": 299.97
+}
+
+###
+
+### Step 7: Get user bookings
+GET http://localhost:8080/bookings/user/1
+Cookie: access_token=<token_from_login>
+
+###
+
+### Step 8: Create payment for the booking
+POST http://localhost:8080/payments
+Content-Type: application/json
+
+{
+  "bookingId": 1,
+  "amount": 299.97
+}
+
+###
+
+### Step 9: Update payment status to SUCCESS
+PATCH http://localhost:8080/payments/1/status
+Content-Type: application/json
+
+{
+  "status": "SUCCESS"
+}
+
+###
+
+### Step 10: Check event availability after booking
+GET http://localhost:8080/events/1
+
+###
+
+### Step 11: Logout
+POST http://localhost:8080/auth/logout

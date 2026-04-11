@@ -1,0 +1,6 @@
+# Create New REST Feature
+1. Create a new Entity in the `model` package with JPA annotations.
+2. Create a corresponding `Repository` interface extending `JpaRepository`.
+3. Generate a `Service` class to handle business logic.
+4. Add a `@RestController` with endpoints for CRUD operations.
+5. Mirror the structure in `src/test/java` and write at least one integration test using `@SpringBootTest`.

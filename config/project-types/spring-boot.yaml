@@ -1,0 +1,320 @@
+project_type: spring-boot
+display_name: "Spring Boot API"
+language: java
+framework_version: "3.2.x"
+
+inherits:
+  from: config/languages/java.yaml
+  override: true
+
+defaults:
+  build_tool: maven
+  java_version: "21"
+  spring_boot_version: "3.2.0"
+  packaging: jar
+
+modules:
+  naming_pattern: "{module-name}"
+  required_layers:
+    - api
+    - application
+    - domain
+    - infrastructure
+  
+  common_modules:
+    - name: auth
+      description: "Authentication & authorization"
+      entities:
+        - User
+        - Role
+    
+    - name: config
+      description: "Configuration classes"
+      files:
+        - SecurityConfig
+        - OpenApiConfig
+        - GlobalExceptionHandler
+
+dependencies:
+  required:
+    - spring-boot-starter-web
+    - spring-boot-starter-data-jpa
+    - spring-boot-starter-validation
+    - spring-boot-starter-security
+    - spring-boot-starter-test
+    - spring-boot-starter-actuator
+    
+  optional:
+    - spring-boot-starter-cache
+    - spring-boot-starter-mail
+    - springdoc-openapi
+    - flyway-core
+    - testcontainers
+    
+  database:
+    - postgresql
+    - h2 (test)
+    
+  tools:
+    - lombok
+    - mapstruct
+
+templates:
+  controller: |
+    package com.{org}.{project}.{module}.api;
+    
+    import lombok.RequiredArgsConstructor;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
+    
+    import java.util.List;
+    
+    @RestController
+    @RequestMapping("/api/v1/{base-path}")
+    @RequiredArgsConstructor
+    public final class {Entity}Controller {
+        
+        private final {Entity}Service {entity}Service;
+        
+        @GetMapping
+        public ResponseEntity<List<{Entity}Response>> getAll() {
+            return ResponseEntity.ok({entity}Service.findAll());
+        }
+        
+        @GetMapping("/{id}")
+        public ResponseEntity<{Entity}Response> getById(@PathVariable final Long id) {
+            return ResponseEntity.ok({entity}Service.findById(id));
+        }
+        
+        @PostMapping
+        public ResponseEntity<{Entity}Response> create(
+                @RequestBody @Valid final Create{Entity}Request request) {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body({entity}Service.create(request));
+        }
+        
+        @PutMapping("/{id}")
+        public ResponseEntity<{Entity}Response> update(
+                @PathVariable final Long id,
+                @RequestBody @Valid final Update{Entity}Request request) {
+            return ResponseEntity.ok({entity}Service.update(id, request));
+        }
+        
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> delete(@PathVariable final Long id) {
+            {entity}Service.delete(id);
+            return ResponseEntity.noContent().build();
+        }
+    }
+  
+  service_interface: |
+    package com.{org}.{project}.{module}.application;
+    
+    import java.util.List;
+    
+    public interface {Entity}Service {
+        
+        {Entity} findById(final Long id);
+        
+        List<{Entity}> findAll();
+        
+        {Entity} create(final Create{Entity}Request request);
+        
+        {Entity} update(final Long id, final Update{Entity}Request request);
+        
+        void delete(final Long id);
+    }
+  
+  service_impl: |
+    package com.{org}.{project}.{module}.application;
+    
+    import lombok.RequiredArgsConstructor;
+    import org.springframework.stereotype.Service;
+    import org.springframework.transaction.annotation.Transactional;
+    
+    import java.util.List;
+    
+    @Service
+    @RequiredArgsConstructor
+    @Transactional(readOnly = true)
+    public final class {Entity}ServiceImpl implements {Entity}Service {
+        
+        private final {Entity}Repository {entity}Repository;
+        
+        @Override
+        public {Entity} findById(final Long id) {
+            return {entity}Repository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("{Entity} not found"));
+        }
+        
+        @Override
+        public List<{Entity}> findAll() {
+            return {entity}Repository.findAll();
+        }
+        
+        @Override
+        @Transactional
+        public {Entity} create(final Create{Entity}Request request) {
+            // Implementation
+        }
+    }
+  
+  repository: |
+    package com.{org}.{project}.{module}.infrastructure;
+    
+    import org.springframework.data.jpa.repository.JpaRepository;
+    import org.springframework.stereotype.Repository;
+    
+    @Repository
+    public interface {Entity}Repository extends JpaRepository<{Entity}, Long> {
+    }
+  
+  entity: |
+    package com.{org}.{project}.{module}.domain;
+    
+    import jakarta.persistence.*;
+    import lombok.*;
+    import java.time.LocalDateTime;
+    
+    @Entity
+    @Table(name = "{table_name}")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public final class {Entity} {
+        
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        
+        @Column(nullable = false)
+        private String name;
+        
+        @Column(name = "created_at", nullable = false, updatable = false)
+        private LocalDateTime createdAt;
+        
+        @Column(name = "updated_at")
+        private LocalDateTime updatedAt;
+        
+        @PrePersist
+        private void onCreate() {
+            createdAt = LocalDateTime.now();
+        }
+        
+        @PreUpdate
+        private void onUpdate() {
+            updatedAt = LocalDateTime.now();
+        }
+    }
+  
+  dto_request: |
+    package com.{org}.{project}.{module}.api;
+    
+    import jakarta.validation.constraints.*;
+    import lombok.*;
+    
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public final class Create{Entity}Request {
+        
+        @NotBlank(message = "Name is required")
+        private String name;
+    }
+  
+  dto_response: |
+    package com.{org}.{project}.{module}.api;
+    
+    import lombok.*;
+    import java.time.LocalDateTime;
+    
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public final class {Entity}Response {
+        
+        private Long id;
+        private String name;
+        private LocalDateTime createdAt;
+        
+        public static {Entity}Response from(final {Entity} entity) {
+            return {Entity}Response.builder()
+                    .id(entity.getId())
+                    .name(entity.getName())
+                    .createdAt(entity.getCreatedAt())
+                    .build();
+        }
+    }
+
+config_files:
+  application_yaml: |
+    spring:
+      application:
+        name: {project-name}
+      
+      datasource:
+        url: jdbc:postgresql://localhost:5432/{database}
+        username: ${DB_USERNAME:postgres}
+        password: ${DB_PASSWORD:postgres}
+      
+      jpa:
+        hibernate:
+          ddl-auto: validate
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            format_sql: true
+        show-sql: true
+      
+      flyway:
+        enabled: true
+        locations: classpath:db/migration
+    
+    server:
+      port: 8080
+      servlet:
+        context-path: /api
+    
+    logging:
+      level:
+        com.{org}.{project}: DEBUG
+
+database:
+  migration_format: flyway
+  pattern: "V{number}__{description}.sql"
+  examples:
+    - V1__create-users-table.sql
+    - V2__add-user-indexes.sql
+
+validation:
+  preferred:
+    - jakarta.validation (Bean Validation)
+    - Custom validators for business rules
+    - @Valid on request bodies
+    - @NotNull, @NotBlank, @Size, @Email, @Pattern
+
+security:
+  preferred:
+    - JWT tokens
+    - Spring Security
+    - Role-based access control
+    - Method-level security (@PreAuthorize)
+
+testing:
+  frameworks:
+    - JUnit 5
+    - Mockito
+    - Testcontainers (integration)
+    - Spring Boot Test
+  
+  structure:
+    test/
+    └── java/
+        └── com/{org}/{project}/
+            ├── [module]/
+            │   ├── api/          # Controller tests
+            │   └── application/  # Service tests
+            └── TestBase.java     # Base test class

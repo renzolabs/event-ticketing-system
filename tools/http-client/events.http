@@ -1,0 +1,23 @@
+### Event API Tests
+
+### Create an event (requires authentication)
+POST http://localhost:8080/events
+Content-Type: application/json
+Cookie: access_token=<token_from_login>
+
+{
+  "name": "Summer Music Festival",
+  "description": "An amazing outdoor music festival featuring top artists",
+  "date": "2024-07-15T18:00:00",
+  "totalTickets": 1000
+}
+
+###
+
+### List all events (public)
+GET http://localhost:8080/events
+
+###
+
+### Get specific event by ID (public)
+GET http://localhost:8080/events/1
