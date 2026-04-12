@@ -17,7 +17,8 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Event Ticketing System API")
-                        .description("A modular monolith Spring Boot application for event ticketing with cookie-based JWT authentication")
+                        .description("A modular monolith Spring Boot application for event ticketing "
+                                + "with cookie-based JWT authentication")
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Renzo Labs")
