@@ -22,7 +22,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final CookieUtil cookieUtil;
 
-    public JwtAuthenticationFilter(JwtProvider jwtProvider, UserDetailsService userDetailsService, CookieUtil cookieUtil) {
+    public JwtAuthenticationFilter(
+            JwtProvider jwtProvider,
+            UserDetailsService userDetailsService,
+            CookieUtil cookieUtil) {
         this.jwtProvider = jwtProvider;
         this.userDetailsService = userDetailsService;
         this.cookieUtil = cookieUtil;
