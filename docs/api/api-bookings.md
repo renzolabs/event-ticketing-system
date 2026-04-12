@@ -1,4 +1,4 @@
-# 🎫 Bookings API
+# Bookings API
 
 ## Overview
 Booking system for purchasing and managing event tickets.

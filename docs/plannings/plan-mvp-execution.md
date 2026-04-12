@@ -15,7 +15,7 @@ Build a **modular monolith REST backend** for an Event Ticketing System using Sp
 # 🧱 Architecture Summary
 
 * Pattern: Modular Monolith
-* Backend: Spring Boot 3.x (Java 17+)
+* Backend: Spring Boot 3.x (Java 21+)
 * DB: PostgreSQL
 * Auth: JWT via HTTP-only Cookie
 * API: REST
