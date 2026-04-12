@@ -97,6 +97,10 @@ event-ticketing-system/
 
 ## 🔧 Code Quality
 
+### Git Workflow
+
+See [Git Workflow Guide](docs/workflows/git-workflow.md) for detailed branching and merging strategy.
+
 ### Git Hooks
 
 Install hooks for automatic code quality checks:
