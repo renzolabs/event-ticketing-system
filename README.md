@@ -1,36 +1,37 @@
-![Event Ticketing System Banner](docs/assets/caveman-tries-ticketing-festival-banner.png)
-
-# 🎟️ Event Ticketing Platform
+# 🎟️ Event Ticketing System
 
 [![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot/)
+[![Maven](https://img.shields.io/badge/Maven-3.8+-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](https://redis.io/)
-[![JWT](https://img.shields.io/badge/JWT-Auth-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**A scalable backend system for event creation, ticket booking, and user authentication.**
+**Event Ticketing System - Spring Boot backend.**
 
 ## 🚀 Quick Start
 
 ```bash
-# Clone the repository
+# Clone and setup
 git clone https://github.com/renzolabs/event-ticketing-system.git
 cd event-ticketing-system
 
+# Install git hooks
+bash scripts/install-git-hooks.sh
+
 # Start infrastructure services
-docker-compose up -d postgres redis
+docker-compose -f docker/docker-compose.yml up -d
+
+# Build the project
+./mvnw clean install
 
 # Run the application
-mvn spring-boot:run
-
-# Access the API
-curl http://localhost:8080/actuator/health
+./mvnw spring-boot:run
 ```
 
 ## 📋 Overview
 
-The Event Ticketing Platform is a **Phase 1 (Core System Only)** backend built to support:
+The Event Ticketing System is a **Phase 1** backend built to support:
 - Event creation & management
 - Ticket booking system
 - User authentication
@@ -73,20 +74,19 @@ The Event Ticketing Platform is a **Phase 1 (Core System Only)** backend built t
 
 ```
 event-ticketing-system/
-+-- src/main/java/com/renzo/labs/ticketing/
-¦   +-- core/                    # Domain entities
-¦   +-- application/             # Business logic
-¦   +-- infrastructure/          # External integrations
-¦   +-- interfaces/              # API controllers
-+-- src/main/resources/
-¦   +-- application.yaml         # Configuration
-¦   +-- db/migration/           # Database migrations
-+-- docs/
-¦   +-- api/                    # API documentation
-¦   +-- architecture/           # System design
-¦   +-- development/            # Development guides
-+-- docker-compose.yml          # Local development
-+-- pom.xml                     # Maven configuration
+├── src/
+│   ├── main/java/              # Application code
+│   └── test/java/              # Test code
+├── config/
+│   ├── checkstyle.xml          # Checkstyle rules
+│   └── sonar-project.properties # SonarQube config
+├── docker/
+│   └── docker-compose.yml      # PostgreSQL + Redis
+├── scripts/
+│   ├── format-java.sh          # Format all Java files
+│   └── install-git-hooks.sh    # Setup git hooks
+├── tools/                      # CLI tools (google-java-format)
+└── pom.xml                     # Maven configuration
 ```
 
 ## 📋 Prerequisites
@@ -94,8 +94,42 @@ event-ticketing-system/
 - Java 21+
 - Maven 3.8+
 - Docker & Docker Compose
-- PostgreSQL 15+ (or use Docker)
-- Redis 7+ (or use Docker)
+
+## 🔧 Code Quality
+
+### Git Hooks
+
+Install hooks for automatic code quality checks:
+
+```bash
+bash scripts/install-git-hooks.sh
+```
+
+Hooks installed:
+- **pre-commit**: Validates filenames, formats Java, compiles code
+- **commit-msg**: Enforces conventional commits (`feat:`, `fix:`, etc.)
+
+### Manual Formatting
+
+```bash
+# Format all Java files
+bash scripts/format-java.sh
+```
+
+### Checkstyle
+
+Basic rules configured in `config/checkstyle.xml`:
+- Max line length: 120
+- No star imports
+- No unused imports
+
+### SonarQube
+
+Configuration in `config/sonar-project.properties`. Run analysis:
+
+```bash
+sonar-scanner -Dproject.settings=config/sonar-project.properties
+```
 
 ## 📚 Documentation
 
@@ -169,13 +203,10 @@ docker run -p 8080:8080 ticketing-system
 
 ```bash
 # Run all tests
-mvn test
+./mvnw test
 
-# Run with coverage
-mvn jacoco:report
-
-# Run integration tests
-mvn test -Dtest=**/*IntegrationTest
+# Run with coverage report
+./mvnw jacoco:report
 ```
 
 ## 📊 Monitoring
@@ -198,64 +229,26 @@ JWT_SECRET=your-secret-key-here
 
 ### Docker Compose
 ```bash
-# Start all services
-docker-compose up -d
+# Start infrastructure services
+docker-compose -f docker/docker-compose.yml up -d
 
 # View logs
-docker-compose logs -f
+docker-compose -f docker/docker-compose.yml logs -f
 ```
-
-## 📈 Scalability Plan
-
-Future upgrades include:
-- Split into microservices
-- Add message queues (Kafka)
-- Implement API Gateway
-- Deploy on Kubernetes
-- Add caching layers
-- Implement payment gateways
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+2. Install git hooks: `bash scripts/install-git-hooks.sh`
+3. Create a feature branch: `git checkout -b feat/your-feature`
+4. Make changes (hooks auto-format and validate)
+5. Push (hooks run tests)
+6. Submit a pull request
 
-See [Contributing Guidelines](docs/development/contributing.md) for details.
+## � License
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 💬 Support
-
-For questions and support:
-- Create an [Issue](https://github.com/your-repo/issues)
-- Check [Documentation](docs/)
-- Review [FAQ](docs/faq.md)
-
-## 🗺️ Roadmap
-
-### Phase 1 ✅ (Current)
-- Core authentication system
-- Event management
-- Basic booking system
-- Admin controls
-
-### Phase 2 🔄
-- Payment gateway integration
-- Seat selection system
-- Notification system
-- Mobile app API
-
-### Phase 3 🚀
-- Analytics dashboard
-- Advanced reporting
-- Multi-tenant support
-- Third-party integrations
+MIT License - see [LICENSE](LICENSE)
 
 ---
 
-**Built with ❤️ by RenzoLabs**
+**Built by RenzoLabs**
