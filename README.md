@@ -1,8 +1,17 @@
-# ?? Event Ticketing Platform
+![Event Ticketing System Banner](docs/assets/caveman-tries-ticketing-festival-banner.png)
 
-A scalable backend system for event creation, ticket booking, and user authentication.
+# 🎟️ Event Ticketing Platform
 
-## ?? Quick Start
+[![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](https://redis.io/)
+[![JWT](https://img.shields.io/badge/JWT-Auth-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+**A scalable backend system for event creation, ticket booking, and user authentication.**
+
+## 🚀 Quick Start
 
 ```bash
 # Clone the repository
@@ -19,7 +28,7 @@ mvn spring-boot:run
 curl http://localhost:8080/actuator/health
 ```
 
-## ?? Overview
+## 📋 Overview
 
 The Event Ticketing Platform is a **Phase 1 (Core System Only)** backend built to support:
 - Event creation & management
@@ -28,7 +37,7 @@ The Event Ticketing Platform is a **Phase 1 (Core System Only)** backend built t
 - Admin controls
 - Future payment integration
 
-## ?? Core Features
+## ✨ Core Features
 
 ### Authentication
 - User registration and login
@@ -51,7 +60,7 @@ The Event Ticketing Platform is a **Phase 1 (Core System Only)** backend built t
 - View system statistics
 - Export data and reports
 
-## ?? Technology Stack
+## 🛠️ Technology Stack
 
 - **Backend**: Spring Boot 3.x (Java 17+)
 - **Database**: PostgreSQL 17
@@ -60,35 +69,35 @@ The Event Ticketing Platform is a **Phase 1 (Core System Only)** backend built t
 - **Architecture**: Modular monolith (microservice-ready)
 - **Containerization**: Docker & Docker Compose
 
-## ?? Project Structure
+## 📁 Project Structure
 
 ```
 event-ticketing-system/
-+-- src/main/java/com/renzo/lab/ticketing/
-�   +-- core/                    # Domain entities
-�   +-- application/             # Business logic
-�   +-- infrastructure/          # External integrations
-�   +-- interfaces/              # API controllers
++-- src/main/java/com/renzo/labs/ticketing/
+¦   +-- core/                    # Domain entities
+¦   +-- application/             # Business logic
+¦   +-- infrastructure/          # External integrations
+¦   +-- interfaces/              # API controllers
 +-- src/main/resources/
-�   +-- application.yaml         # Configuration
-�   +-- db/migration/           # Database migrations
+¦   +-- application.yaml         # Configuration
+¦   +-- db/migration/           # Database migrations
 +-- docs/
-�   +-- api/                    # API documentation
-�   +-- architecture/           # System design
-�   +-- development/            # Development guides
+¦   +-- api/                    # API documentation
+¦   +-- architecture/           # System design
+¦   +-- development/            # Development guides
 +-- docker-compose.yml          # Local development
 +-- pom.xml                     # Maven configuration
 ```
 
-## ?? Prerequisites
+## 📋 Prerequisites
 
-- Java 17+
+- Java 21+
 - Maven 3.8+
 - Docker & Docker Compose
 - PostgreSQL 15+ (or use Docker)
 - Redis 7+ (or use Docker)
 
-## ?? Documentation
+## 📚 Documentation
 
 ### API Documentation
 - [Authentication API](docs/api/authentication.md)
@@ -104,7 +113,7 @@ event-ticketing-system/
 - [Development Setup](docs/development/setup.md)
 - [Contributing Guidelines](docs/development/contributing.md)
 
-## ?? API Endpoints
+## 🔌 API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - User registration
@@ -130,7 +139,7 @@ event-ticketing-system/
 - `GET /api/admin/events` - Manage events
 - `GET /api/admin/bookings` - View all bookings
 
-## ????? Running the Application
+## 🚀 Running the Application
 
 ### Development Mode
 ```bash
@@ -156,7 +165,7 @@ docker build -t ticketing-system .
 docker run -p 8080:8080 ticketing-system
 ```
 
-## ?? Testing
+## 🧪 Testing
 
 ```bash
 # Run all tests
@@ -169,13 +178,13 @@ mvn jacoco:report
 mvn test -Dtest=**/*IntegrationTest
 ```
 
-## ?? Monitoring
+## 📊 Monitoring
 
 - **Health Check**: http://localhost:8080/actuator/health
 - **Metrics**: http://localhost:8080/actuator/metrics
 - **Info**: http://localhost:8080/actuator/info
 
-## ?? Deployment
+## 🚢 Deployment
 
 ### Environment Variables
 ```bash
@@ -196,7 +205,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-## ?? Scalability Plan
+## 📈 Scalability Plan
 
 Future upgrades include:
 - Split into microservices
@@ -206,7 +215,7 @@ Future upgrades include:
 - Add caching layers
 - Implement payment gateways
 
-## ?? Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -216,32 +225,32 @@ Future upgrades include:
 
 See [Contributing Guidelines](docs/development/contributing.md) for details.
 
-## ?? License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ?? Support
+## 💬 Support
 
 For questions and support:
 - Create an [Issue](https://github.com/your-repo/issues)
 - Check [Documentation](docs/)
 - Review [FAQ](docs/faq.md)
 
-## ??? Roadmap
+## 🗺️ Roadmap
 
-### Phase 1 ? (Current)
+### Phase 1 ✅ (Current)
 - Core authentication system
 - Event management
 - Basic booking system
 - Admin controls
 
-### Phase 2 ??
+### Phase 2 🔄
 - Payment gateway integration
 - Seat selection system
 - Notification system
 - Mobile app API
 
-### Phase 3 ??
+### Phase 3 🚀
 - Analytics dashboard
 - Advanced reporting
 - Multi-tenant support
@@ -249,4 +258,4 @@ For questions and support:
 
 ---
 
-**Built with ?? for the event management community**
+**Built with ❤️ by RenzoLabs**

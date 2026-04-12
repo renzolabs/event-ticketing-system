@@ -10,7 +10,7 @@ Event Ticketing Platform built with modular monolith architecture, designed for 
 
 ### Backend
 - **Framework**: Spring Boot 3.x
-- **Language**: Java 17+
+- **Language**: Java 21+
 - **Architecture**: REST API with layered design
 - **Security**: Spring Security with JWT
 - **Database**: PostgreSQL 15+
