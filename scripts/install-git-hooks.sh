@@ -33,7 +33,7 @@ echo -e "${YELLOW}Installing pre-commit hook...${NC}"
 
 cat > .git/hooks/pre-commit << 'HOOK'
 #!/bin/bash
-# Pre-commit hook: validates files, formats Java, compiles
+# Pre-commit hook: validates files and formats Java
 
 set -e
 
@@ -72,19 +72,42 @@ if [ -f "$FORMATTER_JAR" ]; then
     fi
 fi
 
-# 4. Maven compile check
-echo "  Running Maven compile..."
-if ! (cd "$PROJECT_ROOT" && mvn -q -DskipTests compile); then
-    echo "ERROR: Maven compile failed. Fix errors before committing."
-    exit 1
-fi
-
 echo "Pre-commit checks passed!"
 exit 0
 HOOK
 
 chmod +x .git/hooks/pre-commit
 echo -e "${GREEN}  ✓ pre-commit installed${NC}"
+
+# ============================
+# pre-push hook
+# ============================
+echo -e "${YELLOW}Installing pre-push hook...${NC}"
+
+cat > .git/hooks/pre-push << 'HOOK'
+#!/bin/bash
+# Pre-push hook: runs compile check before pushing
+
+set -e
+
+echo "Running pre-push checks..."
+
+# Get project root
+PROJECT_ROOT="$(git rev-parse --show-toplevel)"
+
+# Run Maven compile check
+echo "  Running Maven compile..."
+if ! (cd "$PROJECT_ROOT" && mvn -q -DskipTests compile); then
+    echo "ERROR: Maven compile failed. Fix errors before pushing."
+    exit 1
+fi
+
+echo "Pre-push checks passed!"
+exit 0
+HOOK
+
+chmod +x .git/hooks/pre-push
+echo -e "${GREEN}  ✓ pre-push installed${NC}"
 
 # ============================
 # commit-msg hook
@@ -132,9 +155,11 @@ echo -e "${GREEN}  Git Hooks Installed!${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
 echo "Hooks installed:"
-echo "  • pre-commit - Validates files, formats Java, compiles"
+echo "  • pre-commit - Validates files, formats Java"
 echo "  • commit-msg - Enforces conventional commits"
+echo "  • pre-push - Runs Maven compile check"
 echo ""
 echo "To bypass in emergencies:"
-echo "  git commit --no-verify"
+echo "  git commit --no-verify    (skip pre-commit, commit-msg)"
+echo "  git push --no-verify      (skip pre-push)"
 echo ""

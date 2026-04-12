@@ -63,7 +63,7 @@ The Event Ticketing System is a **Phase 1** backend built to support:
 
 ## 🛠️ Technology Stack
 
-- **Backend**: Spring Boot 3.x (Java 17+)
+- **Backend**: Spring Boot 3.x (Java 21)
 - **Database**: PostgreSQL 17
 - **Cache**: Redis 7+
 - **Authentication**: JWT with Spring Security
