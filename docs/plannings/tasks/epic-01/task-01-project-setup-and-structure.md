@@ -42,8 +42,6 @@ Verify the Spring Boot project is properly configured and establish the modular 
   - [ ] `application/service/`, `application/dto/`
   - [ ] `infrastructure/persistence/`, `infrastructure/service/`
   - [ ] `api/controller/`
-- [ ] `.gitkeep` files added to empty packages for git tracking
-
 ## Estimated Effort
 4 hours
 
@@ -51,7 +49,7 @@ Verify the Spring Boot project is properly configured and establish the modular 
 TBD
 
 ## Status
-Not Started
+Done
 
 ## Dependencies
 None
