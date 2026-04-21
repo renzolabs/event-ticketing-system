@@ -1,12 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/renzo_ticketing
+    url: jdbc:postgresql://localhost:5432/event_ticketing
     username: postgres
     password: password
 
-app:
-  jwt:
-    secret: dev-ticketing-secret
+
+jwt:
+  secret: dev-ticketing-secret
+  cookie-name: auth_token
 
 ticketing:
   booking:

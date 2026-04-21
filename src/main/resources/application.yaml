@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  profiles:
+    active: dev
+  
   application:
     name: event-ticketing-system
   
@@ -36,10 +39,9 @@ springdoc:
 # ========================
 # 🔐 JWT CONFIG
 # ========================
-app:
-  jwt:
-    secret: your-super-secure-ticketing-secret-key
-    expiration: 86400000   # 24h
+jwt:
+  secret: your-super-secure-ticketing-secret-key
+  expiration: 86400000   # 24h
 
 # ========================
 # 🌐 CORS (VERY IMPORTANT)
@@ -82,8 +84,8 @@ notification:
 logging:
   level:
     root: INFO
-    org.springframework.security: DEBUG
-    org.springframework.web: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    "[org.springframework.security]": DEBUG
+    "[org.springframework.web]": DEBUG
+    "[org.hibernate.SQL]": DEBUG
+    "[org.hibernate.type.descriptor.sql.BasicBinder]": TRACE
     
