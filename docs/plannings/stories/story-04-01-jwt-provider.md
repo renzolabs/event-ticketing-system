@@ -37,10 +37,10 @@ Implementation skeleton:
 ```java
 @Component
 public class JwtProvider {
-    @Value("${app.jwt.secret}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
     
-    @Value("${app.jwt.expiration:3600000}")
+    @Value("${jwt.expiration:3600000}")
     private long jwtExpiration;
     
     public String generateToken(User user) {

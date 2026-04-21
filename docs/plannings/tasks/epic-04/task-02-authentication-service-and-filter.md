@@ -65,7 +65,7 @@ Implement authentication business logic with AuthService and JWT authentication 
 TBD
 
 ## Status
-Not Started
+In Progress (70%)
 
 ## Dependencies
 - Task 1 (JWT Infrastructure) must be complete

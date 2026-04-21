@@ -60,6 +60,6 @@ All API responses should follow this structure:
 ```
 
 ## Error Handling
-- Use `@ControllerAdvice` with `GlobalExceptionHandler`
+- Use `@ControllerAdvice` / `@RestControllerAdvice` with `GlobalExceptionHandler`
 - Return structured error responses
 - Log errors appropriately

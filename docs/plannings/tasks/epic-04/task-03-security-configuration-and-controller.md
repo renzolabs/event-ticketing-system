@@ -72,7 +72,7 @@ Configure Spring Security and create REST endpoints for authentication.
 TBD
 
 ## Status
-Not Started
+In Progress (80%)
 
 ## Dependencies
 - Task 2 (Authentication Service and Filter) must be complete

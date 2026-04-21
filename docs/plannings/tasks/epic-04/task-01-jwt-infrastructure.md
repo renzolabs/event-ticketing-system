@@ -57,7 +57,7 @@ Create JWT token provider and cookie utilities for authentication infrastructure
 TBD
 
 ## Status
-Not Started
+In Progress (75%)
 
 ## Dependencies
 - Epic 3 (User Module) must be complete

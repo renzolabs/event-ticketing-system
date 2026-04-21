@@ -57,7 +57,7 @@ Create the User entity with JPA mappings and implement the repository layer for 
 TBD
 
 ## Status
-Not Started
+In Progress (60%)
 
 ## Dependencies
 - Epic 2 (Shared Infrastructure) must be complete

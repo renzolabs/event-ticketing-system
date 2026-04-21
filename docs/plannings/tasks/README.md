@@ -37,18 +37,18 @@ Each task is:
 
 ## Task Organization
 
-| Epic | Task | Description | Est. |
-|------|------|-------------|------|
-| **Epic 1** | 1.1 | Project Setup and Modular Structure | 4h |
-| | 1.2 | Database and Infrastructure Setup | 4h |
-| **Epic 2** | 2.1 | Base Entity and Response Framework | 4h |
-| | 2.2 | Exception Handling and Validation | 4h |
-| **Epic 3** | 3.1 | User Entity and Repository | 4h |
-| | 3.2 | User Service and DTOs | 4h |
-| **Epic 4** | 4.1 | JWT Infrastructure | 4h |
-| | 4.2 | Authentication Service and Filter | 4h |
-| | 4.3 | Security Configuration and Controller | 4h |
-| **Total** | | | **~36h** |
+| Epic | Task | Description | Est. | Status |
+|------|------|-------------|------|--------|
+| **Epic 1** | 1.1 | Project Setup and Modular Structure | 4h | Done |
+| | 1.2 | Database and Infrastructure Setup | 4h | Done |
+| **Epic 2** | 2.1 | Base Entity and Response Framework | 4h | Done |
+| | 2.2 | Exception Handling and Validation | 4h | Done |
+| **Epic 3** | 3.1 | User Entity and Repository | 4h | In Progress (60%) |
+| | 3.2 | User Service and DTOs | 4h | Not Started |
+| **Epic 4** | 4.1 | JWT Infrastructure | 4h | In Progress (75%) |
+| | 4.2 | Authentication Service and Filter | 4h | In Progress (70%) |
+| | 4.3 | Security Configuration and Controller | 4h | In Progress (80%) |
+| **Total** | | | **~36h** | ~45% Complete |
 
 ## How to Work on Tasks
 
